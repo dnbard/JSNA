@@ -8,6 +8,7 @@ define(['module/baseComponent', 'public/global', 'images'],
 
             this.x = 5;
             this.y = 20;
+            this.layer = 99999;
 
             this.font = 'bold 17px Arial';
 
@@ -33,12 +34,6 @@ define(['module/baseComponent', 'public/global', 'images'],
                     y: this.y,
                     font: this.font,
                     color: 'yellow'
-                });
-
-                this.drawImage(ctx, {
-                    x: 50 + i,
-                    y: 60,
-                    image: images.get('http://naxel.github.com/src/articles/habr/canvas-text/simple.png')
                 });
             }
         }

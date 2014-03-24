@@ -4,7 +4,7 @@ define(function(){
 
     function Images(){
         if(instance !== null){
-            throw new Error("Cannot instantiate more than one MySingleton, use MySingleton.getInstance()");
+            throw new Error("Cannot instantiate more than one ImageSingleton");
         }
 
         this.initialize();
@@ -12,8 +12,6 @@ define(function(){
 
     Images.prototype = {
         initialize: function(){
-            this.foo = 0;
-            this.bar = 1;
             this.get = function(imageName){
                 var image = images[imageName];
                 if (!image){

@@ -1,4 +1,4 @@
-define(['public/global', 'module/fpsCounter', 'public/game'], function(global, FpsCounter, Game){
+define(['public/global', 'module/fpsCounter', 'public/game', 'mouse'], function(global, FpsCounter, Game, Mouse){
 
     function getDrawingContext(){
         try{
@@ -29,6 +29,8 @@ define(['public/global', 'module/fpsCounter', 'public/game'], function(global, F
 
                 if ((delay < 0? -delay: delay) < maxDelay) return;
                 lastFrameMilliseconds = milliseconds;
+
+                Mouse.update(cTime);
 
                 game.update(cTime);
                 game.draw(cTime, ctx);
