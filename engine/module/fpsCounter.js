@@ -1,16 +1,22 @@
-define(['module/baseComponent', 'public/global', 'images', 'sprites/sprites-wrapper'],
-    function(baseComponent, global, images, spritesWrapper){
-        function FpsCounter(){
-            var counter = 0,
-                maxDelay = global.maxDelay(),
-                lastSecond = 0,
-                fpsValue = 0;
+define([
+    'module/baseComponent', 
+    'public/global', 
+    'images', 
+    'sprites/sprites-wrapper', 
+    'underscore'
+],
+    function(baseComponent, global, images, spritesWrapper, _){
+        function FpsCounter(){            
+            maxDelay = global.maxDelay(),
+            lastSecond = 0,
+            fpsValue = 0,
+            counter = 0;
 
             this.x = 5;
             this.y = 20;
             this.layer = 99999;
 
-            this.font = 'bold 17px Arial';
+            this.font = 'bold 17px Arial';                                    
 
             this.update = function(time){
                 counter ++;
@@ -20,14 +26,14 @@ define(['module/baseComponent', 'public/global', 'images', 'sprites/sprites-wrap
                     counter = 0;
                     lastSecond = time.getSeconds();
                 }
-            };
-
-            this.tick = function(){
-                /*if(global.isDebug)
-                    console.log(lastSecond + 's: ' + counter);*/
             }
+        }
 
-            this.draw = function(time, ctx){
+        FpsCounter.prototype = _.extend({            
+            tick: function(){
+
+            },
+            draw: function(time, ctx){
                 this.fillText(ctx, {
                     text: fpsValue,
                     x: this.x,
@@ -36,9 +42,8 @@ define(['module/baseComponent', 'public/global', 'images', 'sprites/sprites-wrap
                     color: 'yellow'
                 });
             }
-        }
-
-        FpsCounter.prototype = baseComponent;
+        }, baseComponent);
+        
         return FpsCounter;
     }
 );

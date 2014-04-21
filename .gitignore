@@ -2,7 +2,8 @@
 
 node_modules/
 bower_components/
-sprites/sprites*
+sprites/sprites.json
+sprites/spritesheet*
 
 
 #################

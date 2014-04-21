@@ -16,7 +16,6 @@ define([
     Images.prototype = {
         initialize: function(){
             this.get = function(imageName, doRequest){
-
                 if (doRequest){
                     return getImageFromIndividualRequest(imageName);                    
                 } else {
