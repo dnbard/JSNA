@@ -9,13 +9,20 @@ define(['gui/baseGui'], function(BaseGui){
         this.draw = function(time, ctx){
             baseDraw(time, ctx);
             if (this.image != null){
-                this.drawImage(ctx, {
-                    x: this.x,
-                    y: this.y,
-                    image: this.image
-                });
+                var drawParams = {
+                        x: this.x,
+                        y: this.y,
+                        image: this.image
+                    };
+
+                if (this.image.isPartOfSpriteSheet) {
+                    this.drawSprite(ctx, drawParams)
+                } else {
+                    this.drawImage(ctx, drawParams);
+                }
             }
 
+            //DEBUG
             this.fillText(ctx, {
                 text: this.mouseHover,
                 x: 0,
@@ -29,18 +36,32 @@ define(['gui/baseGui'], function(BaseGui){
         this.update = function(time){
             if (this.image && this.image != oldImage){
                 oldImage = this.image;
-                if (this.image.width == 0 && this.image.height == 0){
-                    this.image.onload = function(event){
-                        self.width = self.image.width;
-                        self.height = self.image.height;
-                    }
-                } else {
-                    this.width = this.image.width;
-                    this.height = this.image.height;
-                }
+                calculateImageSize();   
             }
 
             baseUpdate(time);
+        }
+
+        function calculateImageSize(){
+            if (self.image.width == 0 && self.image.height == 0){
+                if (self.image.isPartOfSpriteSheet){
+                        self.width = self.image.spriteInfo.width;
+                        self.height = self.image.spriteInfo.height;
+                }
+
+                this.image.onload = function(event){
+                    if (self.isPartOfSpriteSheet){
+                        self.width = self.spriteInfo.width;
+                        self.height = self.spriteInfo.height;
+                    } else {
+                        self.width = self.image.width;
+                        self.height = self.image.height;
+                    }
+                }
+            } else {
+                self.width = self.image.width;
+                self.height = self.image.height;
+            }
         }
     }
 

@@ -1,5 +1,5 @@
-define(['module/baseComponent', 'public/global', 'images'],
-    function(baseComponent, global, images){
+define(['module/baseComponent', 'public/global', 'images', 'sprites/sprites-wrapper'],
+    function(baseComponent, global, images, spritesWrapper){
         function FpsCounter(){
             var counter = 0,
                 maxDelay = global.maxDelay(),

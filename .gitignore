@@ -1,3 +1,10 @@
+## own rules
+
+node_modules/
+bower_components/
+sprites/sprites*
+
+
 #################
 ## Eclipse
 #################

@@ -28,6 +28,19 @@ define({
             options.x? options.x: 0,
             options.y? options.y: 0);
     },
+    drawSprite: function(ctx, options){
+        var spriteInfo = options.image.spriteInfo;
+
+        ctx.drawImage(options.image,
+            spriteInfo.offset_x, 
+            spriteInfo.offset_y,
+            spriteInfo.width, 
+            spriteInfo.height,
+            options.x? options.x: 0,
+            options.y? options.y: 0,
+            spriteInfo.width,
+            spriteInfo.height);
+    },
     isPointInRect: function(point, rect){
         try{
             return (point.x >= rect.x && point.y >= rect.y &&

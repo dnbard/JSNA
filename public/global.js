@@ -6,5 +6,6 @@ define({
     maxDelay: function(){
         return 1000 / this.fps;
     },
-    width: 900
+    width: 900, 
+    spritesFolder: 'sprites/'
 });

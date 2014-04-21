@@ -1,4 +1,7 @@
-define(function(){
+define([
+    'sprites/sprites-wrapper',
+    'public/global'
+],function(spritesWrapper, global){
     var instance = null,
         images = [];
 
@@ -12,14 +15,13 @@ define(function(){
 
     Images.prototype = {
         initialize: function(){
-            this.get = function(imageName){
-                var image = images[imageName];
-                if (!image){
-                    image = new Image();
-                    image.src = imageName;
-                    images[imageName] = image;
+            this.get = function(imageName, doRequest){
+
+                if (doRequest){
+                    return getImageFromIndividualRequest(imageName);                    
+                } else {
+                    return getImageFromSpriteSheet(imageName);
                 }
-                return image;
             }
         }
     };
@@ -30,6 +32,38 @@ define(function(){
         }
         return instance;
     };
+
+    function getImageFromIndividualRequest(imageName){
+        var image = images[imageName];
+        if (!image){
+            image = new Image();
+            image.src = imageName;
+            images[imageName] = image;
+        }
+        return image;
+    }
+
+    function getImageFromSpriteSheet(imageName){
+        var sprite = spritesWrapper[imageName];
+
+        if (!sprite) {
+            console.error('Cannot find ' + imageName + ' image');
+            return null;
+        } else {
+            var spritePath = global.spritesFolder + sprite.image,
+            image = getImageFromIndividualRequest(spritePath);
+            
+            if (!image){
+                image = new Image();
+                image.src = imageName;
+                images[imageName] = image;
+            } 
+
+            image.isPartOfSpriteSheet = true;
+            image.spriteInfo = sprite;
+            return image;
+        }       
+    }
 
     return Images.getInstance();
 });
