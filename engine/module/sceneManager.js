@@ -39,6 +39,14 @@ define([
 				this.activeScene = scene;
 				events.publish(events.list.SCENE_CHANGED, scene);
 			}
+		},
+		update: function(time){
+			if(this.activeScene)
+				this.activeScene.update(time);
+		},
+		draw: function(time,ctx){
+			if(this.activeScene)
+				this.activeScene.draw(time, ctx);
 		}
 	};
 

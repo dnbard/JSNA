@@ -1,4 +1,4 @@
-define(['underscore'], function(_){
+define(['underscore', 'public/global'], function(_, global){
 	function SceneComponent(){
 		this.components = [];
 	}
@@ -17,11 +17,11 @@ define(['underscore'], function(_){
 
 	SceneComponent.prototype = {		
 		addComponent: function(component){			
-            components.push(this.component);
-            components.sort(componentsSort);        
+            this.components.push(component);
+            this.components.sort(componentsSort);        
 		},
 		removeComponent: function(component){
-            var type = typeof(this.component);
+            var type = typeof(component);
 
             if (type == 'object'){
                 var index = components.indexOf(component);
@@ -29,7 +29,7 @@ define(['underscore'], function(_){
                     this.components.splice(index, 1);
                 }
             } else if (type == 'string'){
-                for(var i in this.components){
+                for(var i = 0; i< this.components.length; i++){
                     var element = this.components[i];
                     if (element.name == component){
                         this.components.splice(i, 1);
@@ -39,7 +39,7 @@ define(['underscore'], function(_){
             }
         },
         update: function(time){
-            for(var i in this.components){
+            for(var i = 0; i< this.components.length; i++){
                 var component = this.components[i];
                 if (component.update)
                     component.update(time);

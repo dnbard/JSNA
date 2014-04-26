@@ -20,7 +20,7 @@ define(['public/global', 'module/fpsCounter', 'public/game', 'mouse'], function(
                 lastFrameMilliseconds = -999,
                 ctx = getDrawingContext();
 
-            game.addComponent(fpsCounter);
+            //game.(fpsCounter);
 
             setInterval(function(){
                 var cTime = new Date(),

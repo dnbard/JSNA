@@ -1,6 +1,6 @@
-define(['public/global'], function(global){
+define(['public/global', 'module/sceneManager'], function(global, SceneManager){
     return function(){
-        var components = [],
+        /*var components = [],
             componentsSort = function(a,b){
                 try{
                     return a.layer - b.layer;
@@ -31,25 +31,29 @@ define(['public/global'], function(global){
                     }
                 }
             }
-        }
+        }*/
+
+        this.sceneManager = new SceneManager();
 
         this.update = function(time){
-            for(var i in components){
+            this.sceneManager.update(time);
+            /*for(var i in components){
                 var component = components[i];
                 if (component.update)
                     component.update(time);
-            }
+            }*/
         }
 
         this.draw = function(time, ctx){
-            setDefaultStyles(ctx);
+            this.sceneManager.draw(time, ctx);
+            /*setDefaultStyles(ctx);
             ctx.fillRect(0, 0, global.width, global.height);
 
             for(var i in components){
                 var component = components[i];
                 if (component.draw)
                     component.draw(time, ctx);
-            }
+            }*/
         }
 
         function setDefaultStyles(ctx){
