@@ -5,6 +5,9 @@ define(['public/global', 'module/fpsCounter', 'public/game', 'mouse'], function(
             var drawingCanvas = document.getElementById(global.canvasId),
                 context = drawingCanvas.getContext('2d');
 
+            drawingCanvas.width = global.width;            
+            drawingCanvas.height = global.height;
+
             return context;
         } catch(e){
             console.error(e);
@@ -19,8 +22,6 @@ define(['public/global', 'module/fpsCounter', 'public/game', 'mouse'], function(
                 game = new Game(),
                 lastFrameMilliseconds = -999,
                 ctx = getDrawingContext();
-
-            //game.(fpsCounter);
 
             setInterval(function(){
                 var cTime = new Date(),

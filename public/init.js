@@ -15,23 +15,21 @@ require([
     'images', 
     'module/sceneManager', 
     'module/scene',
-    'module/fpsCounter'
-], function(eng, Image, images, SceneManager, Scene, FpsCounter){
+    'module/fpsCounter',
+    'gui/buttonText'
+], function(eng, Image, images, SceneManager, Scene, FpsCounter, ButtonText){
     var game = eng.init();
 
-    //var sceneManager = new SceneManager();
-    //game.addComponent(sceneManager);
     var scene = new Scene();
     game.sceneManager
         .add(scene)
         .activate();
 
-    scene.addComponent(new FpsCounter());
-
-    /*game.addComponent(new Image({
-        //image: images.get('http://a.deviantart.net/avatars/l/i/lilyas.gif?1', true),
-        image: images.get('60467'),
-        x: 0,
-        layer: 5000
-    }));*/
+    scene.add(new FpsCounter());
+    scene.add(new ButtonText({
+        text: 'A game without a name', 
+        x: 75,
+        y: 150,
+        color: 'white'
+    }));
 });

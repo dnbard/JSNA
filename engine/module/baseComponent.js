@@ -1,5 +1,7 @@
 define({
     fillText: function(ctx, options){
+        ctx.textBaseline="top";
+
         if (options.font){
             defaultFont = ctx.font;
             ctx.font = options.font;

@@ -50,7 +50,7 @@ define(['module/baseComponent', 'mouse'], function(baseComponent, mouse){
 
         this.raiseEvent = function(type, args){
             for(var i in this.events){
-                var event = events[i];
+                var event = this.events[i];
                 if (event.type == type){
                     event.handler(args);
                 }

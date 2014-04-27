@@ -3,11 +3,11 @@ define([], function(){
 	    canvasId: 'working_canvas',
 	    fps: 60,
 	    isDebug: true,
-	    height: 600,
+	    height: 760,
 	    maxDelay: function(){
 	        return 1000 / this.fps;
 	    },
-	    width: 900, 
+	    width: 1200, 
 	    spritesFolder: 'sprites/'
 	}
 });
