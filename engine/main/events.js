@@ -2,7 +2,10 @@ define([
 	'pubsub'
 ], function(pubsub){
 	var eventsList = {
-		SCENE_CHANGED: 'Scene was changed'
+		SCENE_CHANGED: 'Scene was changed', 
+		KEYBOARD_KEYPRESS: 'Keyboard key was pressed',
+		KEYBOARD_KEYDOWN: 'Keyboard key down',
+		KEYBOARD_KEYUP: 'Keyboard key up'
 	};
 
 	return {

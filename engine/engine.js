@@ -1,4 +1,4 @@
-define(['public/global', 'module/fpsCounter', 'public/game', 'mouse'], function(global, FpsCounter, Game, Mouse){
+define(['public/global', 'module/fpsCounter', 'public/game', 'mouse', 'keyboard'], function(global, FpsCounter, Game, Mouse, Keyboard){
 
     function getDrawingContext(){
         try{
