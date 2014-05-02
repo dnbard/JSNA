@@ -24,13 +24,9 @@ define([
 		self.update = function(time){
 			if ((self.width == 0 || self.height == 0) && (self.text && self.text.length > 0)){
 
-				var measureSpan = document.createElement("span");
-				measureSpan.font = self.font;
-				measureSpan.textContent = self.text;
-				document.body.appendChild(measureSpan);
-				self.width = measureSpan.offsetWidth;
-				self.height = measureSpan.offsetHeight;
-				document.body.removeChild(measureSpan);
+				var measure = this.measureText(null, this.getDrawObject());
+				self.width = measure.width;
+				self.height = measure.height;
 			}
 
 			baseUpdate(time);
@@ -40,13 +36,16 @@ define([
 
 	ButtonText.prototype = new BaseGui();
 	ButtonText.prototype.draw = function(time, ctx){
-		this.fillText(ctx, {
+		this.fillText(ctx, this.getDrawObject());
+	}
+	ButtonText.prototype.getDrawObject = function(){
+		return {
             text: this.text,
             x: this.x,
             y: this.y,
             font: this.font,
             color: this.color
-        });
+        };
 	}	
 
 	return ButtonText;

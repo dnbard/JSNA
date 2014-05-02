@@ -38,6 +38,7 @@ define(['public/global', 'module/fpsCounter', 'public/game', 'mouse'], function(
             }, 0);
 
             return game;
-        }
+        }, 
+        getDrawingContext: getDrawingContext
     };
 });

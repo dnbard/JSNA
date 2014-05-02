@@ -5,7 +5,8 @@ require.config({
         underscore: '../bower_components/underscore/underscore',
         pubsub: '../bower_components/pubsub/src/pubsub',
         sprites: '../sprites', 
-        ext: '../ext'
+        ext: '../ext',
+        'engine-js': '../engine/engine'
     }
 });
 
