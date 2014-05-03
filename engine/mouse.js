@@ -1,4 +1,7 @@
-define(['public/global'], function(global){
+define([
+    'public/global',
+    'underscore'
+], function(global, _){
     var instance = null,
         drawingCanvas = document.getElementById(global.canvasId);
 
@@ -16,38 +19,63 @@ define(['public/global'], function(global){
         this.isMiddleButtonPressed = false;
         this.isRightButtonPressed = false;
 
+        this.isClick = null;
+
         this.initialize();
     }
 
+    var clickHolder = 0;
+
     Mouse.prototype = {
-        initialize: function(){
-            try{
-                drawingCanvas.onmousemove = function(e){
-                    instance.offset.x = e.offsetX - instance.position.x;
-                    instance.offset.y = e.offsetY - instance.position.y;
+        clickHandler : function (e){
+            e = e || {which: null};
 
-                    instance.position.x = e.offsetX;
-                    instance.position.y = e.offsetY;
-                };
-                drawingCanvas.onmouseout = drawingCanvas.onmousemove;
-
-                drawingCanvas.onmousedown = function(e){
-                    this.isLeftButtonPressed = e.which == 1;
-                    this.isMiddleButtonPressed = e.which == 2;
-                    this.isRightButtonPressed = e.which == 3;
-                }
-
-                drawingCanvas.onmouseup = function(e){
-                    if (e.which == 1) this.isLeftButtonPressed = false;
-                    else if (e.which == 2) this.isMiddleButtonPressed = false;
-                    else if (e.which == 3) this.isRightButtonPressed = false;
-                }
-            } catch (e){
-                console.error(e);
+            if (!this.isLeftButtonPressed && e.which == 1){
+                clickHolder = 1;
+                this.isClick = 'left';                
+            } else if (!this.isMiddleButtonPressed && e.which == 2){
+                clickHolder = 1;
+                this.isClick = 'middle';
+            } else if (!this.isRightButtonPressed && e.which == 3){
+                clickHolder = 1;
+                this.isClick = 'right';
+            } else if (clickHolder == 0) {
+                this.isClick = null;
+                clickHolder --;
+            } else {
+                clickHolder --;
             }
+        },
+        initialize: function(){            
+            drawingCanvas.onmousemove = _.bind(function(e){
+                instance.offset.x = e.offsetX - instance.position.x;
+                instance.offset.y = e.offsetY - instance.position.y;
+
+                instance.position.x = e.offsetX;
+                instance.position.y = e.offsetY;
+            }, this);
+            drawingCanvas.onmouseout = drawingCanvas.onmousemove;
+
+            drawingCanvas.onmousedown = _.bind(function(e){
+                this.clickHandler(e);
+
+                this.isLeftButtonPressed = e.which == 1;
+                this.isMiddleButtonPressed = e.which == 2;
+                this.isRightButtonPressed = e.which == 3;                    
+            }, this);
+
+            drawingCanvas.onmouseup = _.bind(function(e){
+                if (e.which == 1) this.isLeftButtonPressed = false;
+                else if (e.which == 2) this.isMiddleButtonPressed = false;
+                else if (e.which == 3) this.isRightButtonPressed = false;                    
+            }, this);
         },
 
         update: function(time){
+            if (clickHolder >= 0) {
+                this.clickHandler();
+            }
+            
             instance.isMouseMove = instance.offset.x != 0 || instance.offset.y != 0;
         }
     };

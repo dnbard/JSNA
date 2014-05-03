@@ -18,7 +18,8 @@ define(['underscore', 'public/global'], function(_, global){
 	SceneComponent.prototype = {		
 		add: function(component){			
             this.components.push(component);
-            this.components.sort(componentsSort);        
+            this.components.sort(componentsSort);
+            return this;     
 		},
 		remove: function(component){
             var type = typeof component;

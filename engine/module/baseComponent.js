@@ -1,6 +1,8 @@
 define([
-    'engine-js'
-], function(engine){
+    'engine-js',    
+    'ext/helpers',
+    'sugar'
+], function(engine, helpers){
     var defaultFont, defaultColor,
         textPrepare = function(ctx, options){
         ctx.textBaseline="top";
@@ -17,16 +19,50 @@ define([
     }, textRestore = function(ctx){
         ctx.fillStyle = defaultColor;
         ctx.font = defaultFont;        
-    }, getTextHeight = function(fontStyle) {
-        var body = document.getElementsByTagName("body")[0];
-        var dummy = document.createElement("div");
-        var dummyText = document.createTextNode("M");
-        dummy.appendChild(dummyText);
-        dummy.setAttribute("style", fontStyle);
+    }, getTextHeight = function(font) {
+        var body = document.getElementsByTagName('body')[0],
+            dummy = document.createElement('div'),
+            dummyText = document.createTextNode('M'),
+            fontStyle = convertFontToCssStyle(font);
+        
+        dummy.appendChild(dummyText);        
+        dummy.setAttribute('style', fontStyle);
         body.appendChild(dummy);
         var result = dummy.offsetHeight;
         body.removeChild(dummy);
         return result;
+    }, findAndRemove = function(array, f){
+        var element = array.find(f);
+        if (element) {
+            array.remove(f);
+            return true;  
+        } 
+        return false;
+    }, convertFontToCssStyle = function(font){
+        var styles = font.words();
+
+        try{
+            var size = styles.find(/[0-9]*p?/);
+            styles.remove(size);
+
+            var isBold = findAndRemove(styles, 'bold'), 
+                isItalic = findAndRemove(styles, 'italic'), 
+                family = styles[0];
+
+            var style = helpers.format('font-family: {0}; font-size: {1};', family, size);
+            if (isBold){
+                style += 'font-weight: bold';
+            }
+            if (isItalic){
+                style += 'font-style: italic';
+            }
+
+            return style;
+
+        } catch (e){
+            console.error(e);
+            console.log('Unhandled font to CSS style conversion: ' + font);
+        }
     }
 
     return {

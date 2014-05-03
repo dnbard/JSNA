@@ -6,31 +6,20 @@ require.config({
         pubsub: '../bower_components/pubsub/src/pubsub',
         sprites: '../sprites', 
         ext: '../ext',
-        'engine-js': '../engine/engine'
+        'engine-js': '../engine/engine',
+        scenes: '../public/scenes', 
+        sugar: '../ext/sugar.min'
     }
 });
 
 require([
-    'engine', 
-    'gui/image', 
-    'images', 
-    'module/sceneManager', 
-    'module/scene',
-    'module/fpsCounter',
-    'gui/buttonText'
-], function(eng, Image, images, SceneManager, Scene, FpsCounter, ButtonText){
+    'engine',
+    'scenes/mainMenu'
+], function(eng, MainMenuScene){
     var game = eng.init();
 
-    var scene = new Scene();
+    var menuScene = new MainMenuScene(game);
     game.sceneManager
-        .add(scene)
+        .add(menuScene)
         .activate();
-
-    scene.add(new FpsCounter());
-    scene.add(new ButtonText({
-        text: 'A game without a name', 
-        x: 75,
-        y: 150,
-        color: 'white'
-    }));
 });

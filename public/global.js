@@ -8,6 +8,7 @@ define([], function(){
 	        return 1000 / this.fps;
 	    },
 	    width: 1200, 
-	    spritesFolder: 'sprites/'
+	    spritesFolder: 'sprites/', 
+	    version: '0.0.1'
 	}
 });

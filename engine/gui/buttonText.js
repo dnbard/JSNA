@@ -1,8 +1,17 @@
 define([
-	'gui/baseGui'
-], function(BaseGui){
+	'underscore',
+	'mixins/events',
+	'mixins/mouseEvents',
+	'mixins/unique',
+	'gui/baseGui',
+	'ext/helpers'
+], function(_, eventsMixin, eventsMouseMixin, uniqueMixin, BaseGui, helpers){
 	function ButtonText(obj){
 		var self = this;
+
+		_.extend(this, eventsMixin);
+		_.extend(this, eventsMouseMixin);
+		_.extend(this, uniqueMixin);
 
 		obj = typeof obj === 'object'? obj : {};
 
@@ -12,26 +21,17 @@ define([
 		self.x = obj.x? obj.x : 0;
 		self.y = obj.y? obj.y : 0;
 
-		self.addEvent('mousein', function(){
-			self.color = 'red';
-		});
-
-		self.addEvent('mouseout', function(){
-			self.color = 'yellow';
-		});
-
-		var baseUpdate = self.__proto__.update.bind(self);
-		self.update = function(time){
-			if ((self.width == 0 || self.height == 0) && (self.text && self.text.length > 0)){
+		var baseUpdate = this.__proto__.update.bind(this);
+		this.update = function(time){
+			if ((this.width == 0 || this.height == 0) && (this.text && this.text.length > 0)){
 
 				var measure = this.measureText(null, this.getDrawObject());
-				self.width = measure.width;
-				self.height = measure.height;
+				this.width = measure.width;
+				this.height = measure.height;
 			}
 
-			baseUpdate(time);
+			this.mouseCheck(time);
 		}
-
 	}
 
 	ButtonText.prototype = new BaseGui();

@@ -1,6 +1,7 @@
 define([
-	'pubsub'
-], function(pubsub){
+	'pubsub',
+	'underscore'
+], function(pubsub, _){
 	var eventsList = {
 		SCENE_CHANGED: 'Scene was changed', 
 		KEYBOARD_KEYPRESS: 'Keyboard key was pressed',
@@ -8,7 +9,7 @@ define([
 		KEYBOARD_KEYUP: 'Keyboard key up'
 	};
 
-	return {
+	var events = {
 		subscribe: function(event, handler){
 			pubsub.subscribe(event, handler);
 		}, 
@@ -17,4 +18,6 @@ define([
 		}, 
 		list: eventsList
 	}
+
+	return _.extend(events, eventsList);
 });

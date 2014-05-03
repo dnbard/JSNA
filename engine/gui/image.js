@@ -1,9 +1,20 @@
-define(['gui/baseGui'], function(BaseGui){
+define([
+    'underscore',
+    'gui/baseGui',
+    'images',
+    'mixins/events',
+    'mixins/mouseEvents',
+    'mixins/unique'
+], function(_, BaseGui, Images, eventsMixin, eventsMouseMixin, uniqueMixin){
     function Image (obj){
         this.merge(this, obj);
 
         var self = this,
             oldImage = null;
+
+        _.extend(this, eventsMixin);
+        _.extend(this, eventsMouseMixin);
+        _.extend(this, uniqueMixin);
 
         var baseDraw = this.__proto__.draw.bind(this);
         this.draw = function(time, ctx){
@@ -21,25 +32,15 @@ define(['gui/baseGui'], function(BaseGui){
                     this.drawImage(ctx, drawParams);
                 }
             }
-
-            //DEBUG
-            this.fillText(ctx, {
-                text: this.mouseHover,
-                x: 0,
-                y: 150,
-                font: this.font,
-                color: 'yellow'
-            });
         }
 
-        var baseUpdate = this.__proto__.update.bind(this);
         this.update = function(time){
             if (this.image && this.image != oldImage){
                 oldImage = this.image;
                 calculateImageSize();   
             }
 
-            baseUpdate(time);
+            this.mouseCheck(time);
         }
 
         function calculateImageSize(){
@@ -49,7 +50,7 @@ define(['gui/baseGui'], function(BaseGui){
                         self.height = self.image.spriteInfo.height;
                 }
 
-                this.image.onload = function(event){
+                self.image.onload = function(event){
                     if (self.isPartOfSpriteSheet){
                         self.width = self.spriteInfo.width;
                         self.height = self.spriteInfo.height;
@@ -66,5 +67,7 @@ define(['gui/baseGui'], function(BaseGui){
     }
 
     Image.prototype = new BaseGui();
+    Image.prototype.manager = Images;
+
     return Image;
 });

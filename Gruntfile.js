@@ -5,7 +5,7 @@ module.exports = function (grunt) {
     grunt.initConfig({
         sprite:{
             all: {
-            src: 'images/*.png',
+            src: ['images/*.png', 'images/*/*.png'],
             destImg: 'sprites/spritesheet.png',
             destCSS: 'sprites/sprites.json',
             cssFormat: 'json'

@@ -1,9 +1,21 @@
 define(['public/global', 'module/fpsCounter', 'public/game', 'mouse', 'keyboard'], function(global, FpsCounter, Game, Mouse, Keyboard){
 
-    function getDrawingContext(){
+    function getDrawingContext(setDrawingSize){
         try{
             var drawingCanvas = document.getElementById(global.canvasId),
-                context = drawingCanvas.getContext('2d');
+                context = drawingCanvas.getContext('2d'), 
+                body = document.body,
+                html = document.documentElement,
+                _width = html.scrollWidth,                
+                _height = Math.max( body.scrollHeight, body.offsetHeight, 
+                    html.clientHeight, html.scrollHeight, html.offsetHeight);
+
+            /*if (setDrawingSize){
+                drawingCanvas.width = _width;            
+                drawingCanvas.height = _height;
+                global.width = _width;
+                global.height = _height;
+            }*/
 
             drawingCanvas.width = global.width;            
             drawingCanvas.height = global.height;
@@ -21,7 +33,7 @@ define(['public/global', 'module/fpsCounter', 'public/game', 'mouse', 'keyboard'
                 fpsCounter = new FpsCounter(),
                 game = new Game(),
                 lastFrameMilliseconds = -999,
-                ctx = getDrawingContext();
+                ctx = getDrawingContext(true);
 
             setInterval(function(){
                 var cTime = new Date(),

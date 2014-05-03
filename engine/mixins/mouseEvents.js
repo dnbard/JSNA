@@ -1,21 +1,11 @@
 define([
-    'module/baseComponent',
-    'mouse',
-    'sugar'
-], function(baseComponent, mouse){
-    function BaseGui(){
-        this.x = 0;
-        this.y = 0;
-        this.width = 0;
-        this.height = 0;
-
-        this.mouseHover = false;
-        var mouseIn = false;
-
-        this.font = 'bold 17px Arial';
-
-        this.update = function(time){
-            /*this.mouseHover = this.isPointInRect({
+	'mouse'
+], function(mouse){
+	return {
+		mouseHover: false,
+        mouseIn: false,
+        mouseCheck: function(time){
+        	this.mouseHover = this.isPointInRect({
                 x: mouse.position.x,
                 y: mouse.position.y
             }, {
@@ -26,8 +16,8 @@ define([
             });
 
             if (this.mouseHover){
-                if (!mouseIn){
-                    mouseIn = true;
+                if (!this.mouseIn){
+                    this.mouseIn = true;
                     this.raiseEvent('mousein');
                 }
                 this.raiseEvent('mousehover');
@@ -40,19 +30,11 @@ define([
                 }
 
             } else {
-                if (mouseIn){
+                if (this.mouseIn){
                     this.raiseEvent('mouseout');
                 }
-                mouseIn = false;
-            }*/
+                this.mouseIn = false;
+            }
         }
-
-        this.draw = function(time, ctx){
-
-        }        
-    }
-
-    BaseGui.prototype = baseComponent;
-
-    return BaseGui;
-})
+	}
+});
