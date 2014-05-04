@@ -85,7 +85,8 @@ define([
 				x: 750,
 				y: 100,
 				image: ImagesManager.get('hero_knight'),
-				layer: 10
+				layer: 10,
+				opacity: 0.5
 			}
 		}
 	};

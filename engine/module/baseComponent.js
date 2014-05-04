@@ -5,7 +5,7 @@ define([
     'sugar'
 ], function(_, engine, helpers){
     var defaultFont, defaultColor,
-        textPrepare = function(ctx, options){
+        prepare = function(ctx, options){
         ctx.textBaseline="top";
 
         if (options.font){
@@ -17,9 +17,14 @@ define([
             defaultColor = ctx.fillStyle;
             ctx.fillStyle = options.color;
         }
-    }, textRestore = function(ctx){
+
+        if (options.opacity){
+            ctx.globalAlpha = options.opacity;
+        }
+    }, restore = function(ctx){
         ctx.fillStyle = defaultColor;
-        ctx.font = defaultFont;        
+        ctx.font = defaultFont;
+        ctx.globalAlpha = 1;
     }, getTextHeight = function(font) {
         var body = document.getElementsByTagName('body')[0],
             dummy = document.createElement('div'),
@@ -70,29 +75,34 @@ define([
         measureText: function(ctx, options){
             ctx = ctx? ctx : engine.getDrawingContext();
 
-            textPrepare(ctx, options);
+            prepare(ctx, options);
 
             var metrics = ctx.measureText(options.text);
             metrics.height = getTextHeight(options.font);
-            textRestore(ctx);
+            restore(ctx);
             return metrics;
         },
         fillText: function(ctx, options){            
-            textPrepare(ctx, options);            
+            prepare(ctx, options);            
 
             ctx.fillText(options.text,
                 options.x? options.x: 0,
                 options.y? options.y: 0
             );
 
-            textRestore(ctx);
+            restore(ctx);
         },
         drawImage: function(ctx, options){
+            prepare(ctx, options);
+
             ctx.drawImage(options.image,
                 options.x? options.x: 0,
                 options.y? options.y: 0);
+
+            restore(ctx);
         },
         drawSprite: function(ctx, options){
+            prepare(ctx, options);
             var spriteInfo = options.image.sprite.spriteInfo[options.image.name];
 
             ctx.drawImage(options.image.sprite,
@@ -104,6 +114,8 @@ define([
                 options.y? options.y: 0,
                 spriteInfo.width,
                 spriteInfo.height);
+
+            restore(ctx);
         },
         isPointInRect: function(point, rect){
             try{

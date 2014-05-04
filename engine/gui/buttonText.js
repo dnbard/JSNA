@@ -38,7 +38,8 @@ define([
             x: this.x,
             y: this.y,
             font: this.font,
-            color: this.color
+            color: this.color,
+            opacity: this.opacity
         };
 	}	
 

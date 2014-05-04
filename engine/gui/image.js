@@ -23,6 +23,7 @@ define([
                 var drawParams = {
                         x: this.x,
                         y: this.y,
+                        opacity: this.opacity,
                         image: this.image
                     };
 
