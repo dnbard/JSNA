@@ -3,9 +3,9 @@ define([
 	'gui/image',
 	'module/fpsCounter',
 	'public/global',
-	'mixins/boundingBox'	,
+	'mixins/characterSelection',
 	'images'
-], function(ButtonText, Image, FpsCounter, global, boundingBoxMixin, ImagesManager){
+], function(ButtonText, Image, FpsCounter, global, characterSelectionMixin, ImagesManager){
 	function startGameOnTickMove(){
 		if (this.x < 150){
 			this.x += 8;
@@ -101,14 +101,50 @@ define([
 				image: ImagesManager.get('hero_knight'),
 				layer: 10,
 				opacity: 0.5
-			}, 
-			events:{
-				mousein: function(){ 
-					this.opacity = 1;
-				},
-				mouseout: function(){ this.opacity = 0.5;}
-			}, 
-			mixins:[boundingBoxMixin]
+			}, 			
+			mixins:[
+				characterSelectionMixin
+			]
+		},
+		'hero-unknown0': {
+			type: Image,
+			init:{
+				x: 750,
+				y: 250,
+				image: ImagesManager.get('hero_unknown'),
+				layer: 10,
+				opacity: 0.35
+			}			
+		},
+		'hero-unknown1': {
+			type: Image,
+			init:{
+				x: 850,
+				y: 250,
+				image: ImagesManager.get('hero_unknown'),
+				layer: 10,
+				opacity: 0.35
+			}			
+		},
+		'hero-unknown2': {
+			type: Image,
+			init:{
+				x: 950,
+				y: 250,
+				image: ImagesManager.get('hero_unknown'),
+				layer: 10,
+				opacity: 0.35
+			}			
+		},
+		'hero-unknown3': {
+			type: Image,
+			init:{
+				x: 1050,
+				y: 250,
+				image: ImagesManager.get('hero_unknown'),
+				layer: 10,
+				opacity: 0.35
+			}			
 		}
 	};
 });

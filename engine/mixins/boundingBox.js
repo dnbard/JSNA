@@ -1,10 +1,13 @@
 define([], function(){
 	return {
 		draw: function(time, ctx){
-			ctx.rect(this.x, this.y, this.width, this.height);
+			var defaultStrokeStyle = ctx.strokeStyle;
 			ctx.strokeStyle = 'cyan';
+
+			ctx.rect(this.x, this.y, this.width, this.height);			
 			ctx.stroke();
-			ctx.strokeStyle= 'black';
+			
+			ctx.strokeStyle = defaultStrokeStyle;
 		}
 	};
 });

@@ -78,6 +78,7 @@ define([
                     }
 
                     this.add(element);
+                    element.name = key;
                     this[key] = element;
                 }, this);
             }

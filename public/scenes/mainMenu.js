@@ -4,19 +4,15 @@ define([
 	'scenes/mainMenuModel',
     'gui/buttonText',
     'gui/image',
-    'images'
-],function(global, Scene, mainMenuModel, ButtonText, Image, ImagesManager){
+    'images',
+    'main/events'
+],function(global, Scene, mainMenuModel, ButtonText, Image, ImagesManager, events){
 	function MainMenuScene (game){
 		this.init(mainMenuModel);
 
-		/*var interval = setInterval(_.bind(function(){
-			this.startGameButton.x += 2;
-			this.optionsButton.x += 2;
-
-			if (this.startGameButton.x > 150){
-				clearInterval(interval);
-			}
-		}, this), 4);*/
+		events.on(events.MM_CHARACTER_SELECTED, function(characterElement){
+			//TODO: get character id from element
+		});
 	}
 
 	MainMenuScene.prototype = new Scene();

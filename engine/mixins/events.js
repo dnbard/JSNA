@@ -3,14 +3,14 @@ define([
 	'sugar'
 ], function(_){
 	return {
-		events: {},
+		_events: {},
 		addEvent: function(type, handler){
 			var id = this.getId()+'';
-			if (!this.events[id]){
-				this.events[id] = [];
+			if (!this._events[id]){
+				this._events[id] = [];
 			}
 	        
-	        this.events[id].push({
+	        this._events[id].push({
 	            type: type,
 	            handler: handler
 	        });
@@ -18,12 +18,12 @@ define([
 
     	raiseEvent: function(type, args){
     		var id = this.getId()+'';
-    		if (!this.events[id]){
+    		if (!this._events[id]){
     			return false;
     		}
 
-	        for(var i in this.events[id]){
-	            var event = this.events[id][i];
+	        for(var i in this._events[id]){
+	            var event = this._events[id][i];
 	            if (event.type == type){
 	                _.bind(event.handler, this)(args);
 	            }
@@ -32,17 +32,17 @@ define([
 
 	    removeEvent: function(event){
 	    	var id = this.getId()+'', 
-	    		eventsContex = this.events[id];
+	    		eventsContex = this._events[id];
 
 	    	if (typeof event == 'object'){
-	    		this.events[event] = null;
+	    		this._events[event] = null;
 	    	} else if (typeof event == 'function'){
 	    		if (eventsContex){
 	    			eventsContex.remove(function(el){
 	    				return el.handler == event;
 	    			});
 	    		} else {
-	    			_.each(this.events, function(value, key){
+	    			_.each(this._events, function(value, key){
 	    				var eventsContex = value;
 	    				eventsContex.remove(function(el){
 	    					return el.handler == event;
@@ -53,7 +53,7 @@ define([
 
 	        var query = typeof event == 'string'? 'type' : 'handler';        
 	        
-	        /*this.events.remove(function(el){
+	        /*this._events.remove(function(el){
 	            return el[query] == event;
 	        });*/
 	    }, 

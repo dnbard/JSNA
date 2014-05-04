@@ -25,7 +25,8 @@ define([
                 if (mouse.isClick){
                     this.raiseEvent('click', {
                         mouse: mouse,
-                        button: mouse.isClick
+                        button: mouse.isClick, 
+                        target: this
                     });
                 }
 

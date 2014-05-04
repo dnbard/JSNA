@@ -7,6 +7,7 @@ define([
 	'ext/helpers'
 ], function(_, eventsMixin, eventsMouseMixin, uniqueMixin, BaseGui, helpers){
 	function ButtonText(obj){
+		
 		this.extend(this, eventsMixin);
 		this.extend(this, eventsMouseMixin);
 		this.extend(this, uniqueMixin);		

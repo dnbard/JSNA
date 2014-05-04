@@ -136,8 +136,8 @@ define([
             if (mixin.update){
                 var mixinUpdate = _.bind(mixin.update, context);
                 context.update = _.wrap(context.update, function(func, time){
-                    mixinUpdate(time);
                     func.bind(context)(time);
+                    mixinUpdate(time);                    
                 });
             }
 
@@ -149,7 +149,13 @@ define([
                 });
             }
 
-            _.extend(context, _.omit(mixin, 'update', 'draw'));
+            if (mixin.events){                
+                _.each(mixin.events, _.bind(function(value, key){
+                    this.addEvent(key, value);
+                }, this));
+            }            
+
+            _.extend(context, _.omit(mixin, 'update', 'draw', 'events'));
         }
     }
 });
