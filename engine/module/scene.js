@@ -71,6 +71,12 @@ define([
                         });
                     }
 
+                    if (value.mixins){
+                        _.each(value.mixins, function(mixin){
+                            element.extend(element, mixin);
+                        });
+                    }
+
                     this.add(element);
                     this[key] = element;
                 }, this);

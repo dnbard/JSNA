@@ -1,9 +1,11 @@
 define([
 	'gui/buttonText',
 	'gui/image',
-	'public/global', 
+	'module/fpsCounter',
+	'public/global',
+	'mixins/boundingBox'	,
 	'images'
-], function(ButtonText, Image, global, ImagesManager){
+], function(ButtonText, Image, FpsCounter, global, boundingBoxMixin, ImagesManager){
 	function startGameOnTickMove(){
 		if (this.x < 150){
 			this.x += 8;
@@ -21,7 +23,10 @@ define([
 	}
 
 	return {
-		/*'startGameButton': {
+		'fps': {
+			type: FpsCounter
+		},
+		'startGameButton': {
 			type: ButtonText,
 			init: {				
 		        text: 'START',
@@ -78,12 +83,21 @@ define([
 				image: ImagesManager.get('mm_darkcaster'),
 				layer: 10
 			}
-		}, */
+		},
+		'selectCharacter':{
+			type: ButtonText,
+			init:{
+				x: 750,
+				y: 180,
+				text: 'Select character',
+				font: '45px Dosis'
+			}
+		},
 		'hero-knight': {
 			type: Image,
 			init:{
-				x: 750,
-				y: 100,
+				x: 650,
+				y: 250,
 				image: ImagesManager.get('hero_knight'),
 				layer: 10,
 				opacity: 0.5
@@ -93,7 +107,8 @@ define([
 					this.opacity = 1;
 				},
 				mouseout: function(){ this.opacity = 0.5;}
-			}
+			}, 
+			mixins:[boundingBoxMixin]
 		}
 	};
 });

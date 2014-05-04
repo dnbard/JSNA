@@ -141,7 +141,15 @@ define([
                 });
             }
 
-            _.extend(context, _.omit(mixin, 'update'));
+            if (mixin.draw){
+                var mixinDraw = _.bind(mixin.draw, context);
+                context.draw = _.wrap(context.draw, function(func, time, ctx){
+                    mixinDraw(time, ctx);
+                    func.bind(context)(time, ctx);
+                });
+            }
+
+            _.extend(context, _.omit(mixin, 'update', 'draw'));
         }
     }
 });

@@ -15,7 +15,7 @@ define([
 
 		this.text = obj.text? obj.text: '';
 		this.font = obj.font? obj.font: this.font;
-		this.color = obj.color? obj.color: 'yellow';
+		this.color = obj.color? obj.color: 'white';
 		this.x = obj.x? obj.x : 0;
 		this.y = obj.y? obj.y : 0;		
 	}
