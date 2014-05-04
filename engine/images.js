@@ -58,9 +58,16 @@ define([
                 images[imageName] = image;
             } 
 
-            image.isPartOfSpriteSheet = true;
-            image.spriteInfo = sprite;
-            return image;
+            if (!image.spriteInfo){
+                image.spriteInfo = {};
+            }
+
+            image.spriteInfo[imageName] = sprite;
+            return {
+                sprite: image,
+                name: imageName,
+                isPartOfSpriteSheet: true
+            };
         }       
     }
 

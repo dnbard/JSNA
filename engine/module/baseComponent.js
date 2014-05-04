@@ -93,9 +93,9 @@ define([
                 options.y? options.y: 0);
         },
         drawSprite: function(ctx, options){
-            var spriteInfo = options.image.spriteInfo;
+            var spriteInfo = options.image.sprite.spriteInfo[options.image.name];
 
-            ctx.drawImage(options.image,
+            ctx.drawImage(options.image.sprite,
                 spriteInfo.x, 
                 spriteInfo.y,
                 spriteInfo.width, 

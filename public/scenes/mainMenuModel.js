@@ -78,6 +78,15 @@ define([
 				image: ImagesManager.get('mm_darkcaster'),
 				layer: 10
 			}
+		}, 
+		'hero-knight': {
+			type: Image,
+			init:{
+				x: 750,
+				y: 100,
+				image: ImagesManager.get('hero_knight'),
+				layer: 10
+			}
 		}
 	};
 });
