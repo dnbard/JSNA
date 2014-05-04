@@ -1,8 +1,9 @@
 define([
+    'underscore',
     'engine-js',    
     'ext/helpers',
     'sugar'
-], function(engine, helpers){
+], function(_, engine, helpers){
     var defaultFont, defaultColor,
         textPrepare = function(ctx, options){
         ctx.textBaseline="top";
@@ -95,8 +96,8 @@ define([
             var spriteInfo = options.image.spriteInfo;
 
             ctx.drawImage(options.image,
-                spriteInfo.offset_x, 
-                spriteInfo.offset_y,
+                spriteInfo.x, 
+                spriteInfo.y,
                 spriteInfo.width, 
                 spriteInfo.height,
                 options.x? options.x: 0,
@@ -118,6 +119,17 @@ define([
             for (var attrname in obj2) {
                 obj1[attrname] = obj2[attrname];
             }
+        }, 
+        extend: function(context, mixin){
+            if (mixin.update){
+                var mixinUpdate = _.bind(mixin.update, context);
+                context.update = _.wrap(context.update, function(func, time){
+                    mixinUpdate(time);
+                    func.bind(context)(time);
+                });
+            }
+
+            _.extend(context, _.omit(mixin, 'update'));
         }
     }
 });

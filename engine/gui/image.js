@@ -12,9 +12,9 @@ define([
         var self = this,
             oldImage = null;
 
-        _.extend(this, eventsMixin);
-        _.extend(this, eventsMouseMixin);
-        _.extend(this, uniqueMixin);
+        this.extend(this, eventsMixin);
+        this.extend(this, eventsMouseMixin);
+        this.extend(this, uniqueMixin);
 
         var baseDraw = this.__proto__.draw.bind(this);
         this.draw = function(time, ctx){
@@ -39,8 +39,6 @@ define([
                 oldImage = this.image;
                 calculateImageSize();   
             }
-
-            this.mouseCheck(time);
         }
 
         function calculateImageSize(){

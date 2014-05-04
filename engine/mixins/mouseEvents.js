@@ -4,7 +4,7 @@ define([
 	return {
 		mouseHover: false,
         mouseIn: false,
-        mouseCheck: function(time){
+        update: function(time){
         	this.mouseHover = this.isPointInRect({
                 x: mouse.position.x,
                 y: mouse.position.y

@@ -1,4 +1,7 @@
-define(['underscore', 'public/global'], function(_, global){
+define([
+    'underscore', 
+    'public/global'
+], function(_, global){
 	function SceneComponent(){
 		this.components = [];
 	}
@@ -54,6 +57,23 @@ define(['underscore', 'public/global'], function(_, global){
                 var component = this.components[i];
                 if (component.draw)
                     component.draw(time, ctx);
+            }
+        }, 
+        init: function(model){
+            if (_.isObject(model)){
+                _.each(model, function(value, key){
+                    var args = value.init? value.init : {},
+                        element = new value.type(args);
+
+                    if (value.events){
+                        _.each(value.events, function(value, key){
+                            element.addEvent(key, value);
+                        });
+                    }
+
+                    this.add(element);
+                    this[key] = element;
+                }, this);
             }
         }
 	};

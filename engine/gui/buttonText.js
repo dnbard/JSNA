@@ -7,36 +7,30 @@ define([
 	'ext/helpers'
 ], function(_, eventsMixin, eventsMouseMixin, uniqueMixin, BaseGui, helpers){
 	function ButtonText(obj){
-		var self = this;
-
-		_.extend(this, eventsMixin);
-		_.extend(this, eventsMouseMixin);
-		_.extend(this, uniqueMixin);
+		this.extend(this, eventsMixin);
+		this.extend(this, eventsMouseMixin);
+		this.extend(this, uniqueMixin);
 
 		obj = typeof obj === 'object'? obj : {};
 
-		self.text = obj.text? obj.text: '';
-		self.font = obj.font? obj.font: self.font;
-		self.color = obj.color? obj.color: 'yellow';
-		self.x = obj.x? obj.x : 0;
-		self.y = obj.y? obj.y : 0;
-
-		var baseUpdate = this.__proto__.update.bind(this);
-		this.update = function(time){
-			if ((this.width == 0 || this.height == 0) && (this.text && this.text.length > 0)){
-
-				var measure = this.measureText(null, this.getDrawObject());
-				this.width = measure.width;
-				this.height = measure.height;
-			}
-
-			this.mouseCheck(time);
-		}
+		this.text = obj.text? obj.text: '';
+		this.font = obj.font? obj.font: this.font;
+		this.color = obj.color? obj.color: 'yellow';
+		this.x = obj.x? obj.x : 0;
+		this.y = obj.y? obj.y : 0;		
 	}
 
 	ButtonText.prototype = new BaseGui();
 	ButtonText.prototype.draw = function(time, ctx){
 		this.fillText(ctx, this.getDrawObject());
+	}
+	ButtonText.prototype.update = function(time){
+		if ((this.width == 0 || this.height == 0) && (this.text && this.text.length > 0)){
+
+			var measure = this.measureText(null, this.getDrawObject());
+			this.width = measure.width;
+			this.height = measure.height;
+		}
 	}
 	ButtonText.prototype.getDrawObject = function(){
 		return {
