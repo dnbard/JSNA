@@ -21,7 +21,7 @@ define([
 	}
 
 	return {
-		'startGameButton': {
+		/*'startGameButton': {
 			type: ButtonText,
 			init: {				
 		        text: 'START',
@@ -78,7 +78,7 @@ define([
 				image: ImagesManager.get('mm_darkcaster'),
 				layer: 10
 			}
-		}, 
+		}, */
 		'hero-knight': {
 			type: Image,
 			init:{
@@ -87,6 +87,12 @@ define([
 				image: ImagesManager.get('hero_knight'),
 				layer: 10,
 				opacity: 0.5
+			}, 
+			events:{
+				mousein: function(){ 
+					this.opacity = 1;
+				},
+				mouseout: function(){ this.opacity = 0.5;}
 			}
 		}
 	};

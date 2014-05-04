@@ -9,16 +9,11 @@ define([
     function Image (obj){
         this.merge(this, obj);
 
-        var self = this,
-            oldImage = null;
-
         this.extend(this, eventsMixin);
         this.extend(this, eventsMouseMixin);
         this.extend(this, uniqueMixin);
 
-        var baseDraw = this.__proto__.draw.bind(this);
         this.draw = function(time, ctx){
-            baseDraw(time, ctx);
             if (this.image != null){
                 var drawParams = {
                         x: this.x,
@@ -33,40 +28,24 @@ define([
                     this.drawImage(ctx, drawParams);
                 }
             }
-        }
-
-        this.update = function(time){
-            if (this.image && this.image != oldImage){
-                oldImage = this.image;
-                calculateImageSize();   
-            }
-        }
-
-        function calculateImageSize(){
-            if (self.image.width == 0 && self.image.height == 0){
-                if (self.image.isPartOfSpriteSheet){
-                        self.width = self.image.spriteInfo.width;
-                        self.height = self.image.spriteInfo.height;
-                }
-
-                self.image.onload = function(event){
-                    if (self.isPartOfSpriteSheet){
-                        self.width = self.spriteInfo.width;
-                        self.height = self.spriteInfo.height;
-                    } else {
-                        self.width = self.image.width;
-                        self.height = self.image.height;
-                    }
-                }
-            } else {
-                self.width = self.image.width;
-                self.height = self.image.height;
-            }
-        }
+        }        
     }
 
     Image.prototype = new BaseGui();
     Image.prototype.manager = Images;
+    Image.prototype.update = function(time){
+        if (this.image){            
+            this.calculateImageSize();   
+        }
+    }
+    Image.prototype.calculateImageSize = function(){
+        if (this.width == 0 && this.height == 0){
+            if (this.image.isPartOfSpriteSheet){
+                    this.width = this.image.sprite.spriteInfo[this.image.name].width;
+                    this.height = this.image.sprite.spriteInfo[this.image.name].height;
+            }            
+        }
+    }
 
     return Image;
 });
