@@ -4,6 +4,22 @@ define([
 	'public/global', 
 	'images'
 ], function(ButtonText, Image, global, ImagesManager){
+	function startGameOnTickMove(){
+		if (this.x < 150){
+			this.x += 8;
+		} else {
+			this.removeEvent(startGameOnTickMove);
+		}
+	}
+
+	function optionsOnTickMove(){
+		if (this.x < 110){
+			this.x += 8;
+		} else {
+			this.removeEvent(optionsOnTickMove);
+		}
+	}
+
 	return {
 		'startGameButton': {
 			type: ButtonText,
@@ -14,20 +30,24 @@ define([
 		        y: 350,
 		        color: 'white'
 			}, 
-			events:{
-				'mousein': function(){ this.color = 'red'; },
-				'mouseout': function(){ this.color = 'white'; },
-				'click': function(){ this.color = 'green'; }
+			events: {
+				mousein: function(){ this.color = 'red'; },
+				mouseout: function(){ this.color = 'white'; },
+				click: function(){ this.color = 'green'; }, 
+				tick: startGameOnTickMove
 			}
 		}, 
 		'optionsButton': {
 			type: ButtonText, 
-			init:{
+			init: {
 				text: 'OPTIONS',
 		        font: '45px Dosis',
 		        x: -145,
 		        y: 400,
 		        color: 'gray'
+			},
+			events: {
+				tick: optionsOnTickMove
 			}
 		}, 
 		'gameNameText': {

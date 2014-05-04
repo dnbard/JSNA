@@ -9,7 +9,7 @@ define([
 	function ButtonText(obj){
 		this.extend(this, eventsMixin);
 		this.extend(this, eventsMouseMixin);
-		this.extend(this, uniqueMixin);
+		this.extend(this, uniqueMixin);		
 
 		obj = typeof obj === 'object'? obj : {};
 

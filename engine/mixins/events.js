@@ -31,8 +31,24 @@ define([
 	    },
 
 	    removeEvent: function(event){
+	    	var id = this.getId()+'', 
+	    		eventsContex = this.events[id];
+
 	    	if (typeof event == 'object'){
 	    		this.events[event] = null;
+	    	} else if (typeof event == 'function'){
+	    		if (eventsContex){
+	    			eventsContex.remove(function(el){
+	    				return el.handler == event;
+	    			});
+	    		} else {
+	    			_.each(this.events, function(value, key){
+	    				var eventsContex = value;
+	    				eventsContex.remove(function(el){
+	    					return el.handler == event;
+	    				});
+	    			});
+	    		}
 	    	}
 
 	        var query = typeof event == 'string'? 'type' : 'handler';        
@@ -40,6 +56,10 @@ define([
 	        /*this.events.remove(function(el){
 	            return el[query] == event;
 	        });*/
+	    }, 
+
+	    update: function(time){
+	    	this.raiseEvent('tick');
 	    }
 	};
 });
