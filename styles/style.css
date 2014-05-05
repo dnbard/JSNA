@@ -1,0 +1,10 @@
+body{
+	background: black;
+}
+
+#working_canvas{
+    margin: 50px auto;
+}
+#canvas_holder{
+    text-align: center;
+}    

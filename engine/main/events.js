@@ -1,32 +1,35 @@
 define([
-	'pubsub',
-	'underscore'
+    'pubsub',
+    'underscore'
 ], function(pubsub, _){
-	var eventsList = {
-		SCENE_CHANGED: 'Scene was changed', 
-		
-		KEYBOARD_KEYPRESS: 'Keyboard key was pressed',
-		KEYBOARD_KEYDOWN: 'Keyboard key down',
-		KEYBOARD_KEYUP: 'Keyboard key up',
+    var eventsList = {
+        SCENE_CHANGED: 'Scene was changed',
+        
+        KEYBOARD_KEYPRESS: 'Keyboard key was pressed',
+        KEYBOARD_KEYDOWN: 'Keyboard key down',
+        KEYBOARD_KEYUP: 'Keyboard key up',
 
-		MM_CHARACTER_SELECTED: 'Character selected on main menu'
-	};
+        MM_CHARACTER_SELECTED: 'Character selected on main menu',
+        MM_START: 'Start game button pressed',
 
-	function publish(){
-		pubsub.publish.apply(this, arguments);
-	}
+        GAME_STARTED: 'Game was started'
+    };
 
-	function subscribe(event, handler){
-		pubsub.subscribe(event, handler);
-	}
+    function publish(){
+        pubsub.publish.apply(this, arguments);
+    }
 
-	var events = {
-		subscribe: subscribe, 
-		trigger: publish,
-		publish: publish, 
-		on: subscribe,
-		list: eventsList
-	}
+    function subscribe(event, handler){
+        pubsub.subscribe(event, handler);
+    }
 
-	return _.extend(events, eventsList);
+    var events = {
+        subscribe: subscribe,
+        trigger: publish,
+        publish: publish,
+        on: subscribe,
+        list: eventsList
+    }
+
+    return _.extend(events, eventsList);
 });

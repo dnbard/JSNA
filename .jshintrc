@@ -1,0 +1,18 @@
+{
+    "undef": true,
+    "unused": true,
+    "camelcase": true,
+    "curly": true,
+    "eqeqeq: true,
+    "forin": true,
+    "latedef": true,
+    "newcap": true,
+    "noempty": false,
+    "strict": false,
+    "debug": true,
+    "globals" {
+        "define": true,
+        "require": true
+    },
+    "globalstrict": false
+}

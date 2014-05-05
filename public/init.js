@@ -8,7 +8,8 @@ require.config({
         ext: '../ext',
         'engine-js': '../engine/engine',
         scenes: '../public/scenes', 
-        sugar: '../ext/sugar.min'
+        sugar: '../ext/sugar.min',
+        base: '../public/base'
     }
 });
 

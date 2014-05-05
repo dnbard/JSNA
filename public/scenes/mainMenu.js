@@ -1,21 +1,37 @@
-define([    
-	'public/global',
-	'module/scene', 
-	'scenes/mainMenuModel',
+define([
+    'public/global',
+    'module/scene', 
+    'scenes/mainMenuModel',
     'gui/buttonText',
     'gui/image',
     'images',
-    'main/events'
-],function(global, Scene, mainMenuModel, ButtonText, Image, ImagesManager, events){
-	function MainMenuScene (game){
-		this.init(mainMenuModel);
+    'main/events',
+    'main/alerts',
+    'scenes/main'
+],function(global, Scene, mainMenuModel, ButtonText, Image, ImagesManager, events, alerts, MainScene){
+    function MainMenuScene (game){
+        this.init(mainMenuModel);
 
-		events.on(events.MM_CHARACTER_SELECTED, function(characterElement){
-			//TODO: get character id from element
-		});
-	}
+        var model = {
+            selectedCharacter: null
+        }
 
-	MainMenuScene.prototype = new Scene();
+        events.on(events.MM_CHARACTER_SELECTED, function(characterElement){
+            model.selectedCharacter = characterElement.character;
+        });
 
-	return MainMenuScene;
+        events.on(events.MM_START, _.bind(function(){
+            if (model.selectedCharacter){
+                game.sceneManager.remove(this)
+                    .add(new MainScene(game))
+                    .activate();
+            } else {
+                alerts.html('Select hero to start game');
+            }
+        }, this));
+    }
+
+    MainMenuScene.prototype = new Scene();
+
+    return MainMenuScene;
 });

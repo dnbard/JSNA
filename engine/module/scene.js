@@ -2,11 +2,11 @@ define([
     'underscore', 
     'public/global'
 ], function(_, global){
-	function SceneComponent(){
-		this.components = [];
-	}
+    function SceneComponent(){
+        this.components = [];
+    }
 
-	function componentsSort (a,b){
+    function componentsSort (a,b){
         try{
             return a.layer - b.layer;
         } catch(e){
@@ -18,13 +18,13 @@ define([
         ctx.fillStyle = "#000";
     }
 
-	SceneComponent.prototype = {		
-		add: function(component){			
+    SceneComponent.prototype = {
+        add: function(component){
             this.components.push(component);
             this.components.sort(componentsSort);
-            return this;     
-		},
-		remove: function(component){
+            return this;
+        },
+        remove: function(component){
             var type = typeof component;
 
             if (type == 'object'){
@@ -83,7 +83,7 @@ define([
                 }, this);
             }
         }
-	};
+    };
 
-	return SceneComponent;
+    return SceneComponent;
 });
