@@ -34,8 +34,8 @@ define([
     Image.prototype = new BaseGui();
     Image.prototype.manager = Images;
     Image.prototype.update = function(time){
-        if (this.image){            
-            this.calculateImageSize();   
+        if (this.image){
+            this.calculateImageSize();
         }
     }
     Image.prototype.calculateImageSize = function(){

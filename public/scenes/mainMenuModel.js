@@ -1,13 +1,14 @@
 define([
     'gui/buttonText',
     'gui/image',
+    'mixins/animation',
     'module/fpsCounter',
     'public/global',
     'mixins/characterSelection',
     'images',
     'base/characters',
     'main/events'
-], function(ButtonText, Image, FpsCounter, global, characterSelectionMixin, ImagesManager, Characters, events){
+], function(ButtonText, Image, AnimationMixin, FpsCounter, global, characterSelectionMixin, ImagesManager, Characters, events){
     function startGameOnTickMove(){
         if (this.x < 150){
             this.x += 8;
@@ -103,13 +104,20 @@ define([
             init:{
                 x: 650,
                 y: 250,
-                image: ImagesManager.get('hero_knight'),
+                image: ImagesManager.get('hero_knight0'),
                 layer: 10,
                 opacity: 0.5,
                 character: Characters['knight']
             },
             mixins:[
-                characterSelectionMixin
+                characterSelectionMixin,
+                new AnimationMixin({
+                    spriteName: 'hero_knight{0}',
+                    startIndex: 0,
+                    finishIndex: 3,
+                    timeoutBetweenFrames: 210,
+                    endless: true
+                })
             ]
         },
         'hero-unknown0': {
