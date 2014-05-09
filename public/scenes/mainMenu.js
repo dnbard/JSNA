@@ -12,22 +12,14 @@ define([
     function MainMenuScene (game){
         this.init(mainMenuModel);
 
-        var model = {
-            selectedCharacter: null
-        }
-
         events.on(events.MM_CHARACTER_SELECTED, function(characterElement){
             model.selectedCharacter = characterElement.character;
         });
 
         events.on(events.MM_START, _.bind(function(){
-            if (model.selectedCharacter){
-                game.sceneManager.remove(this)
-                    .add(new MainScene(game))
-                    .activate();
-            } else {
-                alerts.html('Select hero to start game');
-            }
+            game.sceneManager.remove(this)
+                .add(new MainScene(game))
+                .activate();
         }, this));
     }
 

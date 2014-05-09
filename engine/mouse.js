@@ -22,6 +22,8 @@ define([
         this.isClick = null;
 
         this.initialize();
+
+        this.timer = 0;
     }
 
     var clickHolder = 0;
@@ -53,6 +55,8 @@ define([
 
                 instance.position.x = e.offsetX;
                 instance.position.y = e.offsetY;
+
+                instance.timer = 1;
             }, this);
             drawingCanvas.onmouseout = drawingCanvas.onmousemove;
 
@@ -61,13 +65,13 @@ define([
 
                 this.isLeftButtonPressed = e.which == 1;
                 this.isMiddleButtonPressed = e.which == 2;
-                this.isRightButtonPressed = e.which == 3;                    
+                this.isRightButtonPressed = e.which == 3;
             }, this);
 
             drawingCanvas.onmouseup = _.bind(function(e){
                 if (e.which == 1) this.isLeftButtonPressed = false;
                 else if (e.which == 2) this.isMiddleButtonPressed = false;
-                else if (e.which == 3) this.isRightButtonPressed = false;                    
+                else if (e.which == 3) this.isRightButtonPressed = false;
             }, this);
         },
 
@@ -77,6 +81,13 @@ define([
             }
             
             instance.isMouseMove = instance.offset.x != 0 || instance.offset.y != 0;
+
+            if (instance.timer <= 0){
+                instance.offset.x = 0;
+                instance.offset.y = 0;
+            } else {
+                instance.timer --;
+            }
         }
     };
 

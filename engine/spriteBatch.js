@@ -16,27 +16,29 @@ define([
         });
     }
 
-    SpriteBatch.prototype.begin = function(){
-
+    SpriteBatch.prototype.begin = function(ctx, drawActions){
+        ctx.beginPath();
+        drawActions();
     }
 
-    SpriteBatch.prototype.finish = function(){
+    SpriteBatch.prototype.finish = function(ctx){
         var queueLength = this.queue.length;
 
         while(queueLength > 0){
             var action = this.queue.dequeue();
-            action.handler(action.ctx, action.options);
+            action.handler(ctx, action.options);
 
             queueLength --;
         }
+
+        ctx.stroke();
     }
 
     var addToBatch = _.bind(function(ctx, options, handler){
         this.queue.queue({
             handler: handler,
             layer: options.layer,
-            options: options,
-            ctx: ctx
+            options: options
         });
     }, instance);
 

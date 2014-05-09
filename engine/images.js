@@ -17,7 +17,7 @@ define([
         initialize: function(){
             this.get = function(imageName, doRequest){
                 if (doRequest){
-                    return getImageFromIndividualRequest(imageName);                    
+                    return getImageFromIndividualRequest(imageName);
                 } else {
                     return getImageFromSpriteSheet(imageName);
                 }

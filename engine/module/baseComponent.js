@@ -91,30 +91,41 @@ define([
                 obj1[attrname] = obj2[attrname];
             }
         }, 
-        extend: function(context, mixin){
-            if (mixin.update){
-                var mixinUpdate = _.bind(mixin.update, context);
-                context.update = _.wrap(context.update, function(func, time){
-                    func.bind(context)(time);
-                    mixinUpdate(time);
-                });
+        extend: function(context, mixins){
+            if (arguments.length == 1){
+                mixins = context;
+                context = this;
             }
 
-            if (mixin.draw){
-                var mixinDraw = _.bind(mixin.draw, context);
-                context.draw = _.wrap(context.draw, function(func, time, ctx){
-                    mixinDraw(time, ctx);
-                    func.bind(context)(time, ctx);
-                });
+            if (!_.isArray(mixins)){
+                mixins = [mixins];
             }
 
-            if (mixin.events){
-                _.each(mixin.events, _.bind(function(value, key){
-                    this.addEvent(key, value);
-                }, this));
-            }
+            _.each(mixins, _.bind(function(mixin){
+                if (mixin.update){
+                    var mixinUpdate = _.bind(mixin.update, context);
+                    context.update = _.wrap(context.update, function(func, time){
+                        func.bind(context)(time);
+                        mixinUpdate(time);
+                    });
+                }
 
-            _.extend(context, _.omit(mixin, 'update', 'draw', 'events'));
+                if (mixin.draw){
+                    var mixinDraw = _.bind(mixin.draw, context);
+                    context.draw = _.wrap(context.draw, function(func, time, ctx){
+                        mixinDraw(time, ctx);
+                        func.bind(context)(time, ctx);
+                    });
+                }
+
+                if (mixin.events){
+                    _.each(mixin.events, _.bind(function(value, key){
+                        this.addEvent(key, value);
+                    }, context));
+                }
+
+                _.extend(context, _.omit(mixin, 'update', 'draw', 'events'));
+            }, context));
         }
     }
 });
