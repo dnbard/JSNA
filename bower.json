@@ -1,9 +1,10 @@
 {
-	"name": "JSNA",
-  	"description": "JS canvas 2D game engine",
-  	"version": "0.0.1",    
-	"dependencies": {
-		"underscore": "*", 
-		"pubsub": "*"
-	}
+    "name": "JSNA",
+    "description": "JS canvas 2D game engine",
+    "version": "0.0.1",
+    "dependencies": {
+        "underscore": "*",
+        "pubsub": "*",
+        "js-priority-queue": "*"
+    }
 }

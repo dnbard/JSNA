@@ -1,4 +1,11 @@
-define(['public/global', 'module/fpsCounter', 'public/game', 'mouse', 'keyboard'], function(global, FpsCounter, Game, Mouse, Keyboard){
+define([
+    'public/global',
+    'module/fpsCounter',
+    'public/game',
+    'mouse',
+    'keyboard',
+    'spriteBatch'
+], function(global, FpsCounter, Game, Mouse, Keyboard, spriteBatch){
 
     function getDrawingContext(setDrawingSize){
         try{
@@ -17,7 +24,7 @@ define(['public/global', 'module/fpsCounter', 'public/game', 'mouse', 'keyboard'
                 global.height = _height;
             }*/
 
-            drawingCanvas.width = global.width;            
+            drawingCanvas.width = global.width;
             drawingCanvas.height = global.height;
 
             return context;
@@ -46,7 +53,10 @@ define(['public/global', 'module/fpsCounter', 'public/game', 'mouse', 'keyboard'
                 Mouse.update(cTime);
 
                 game.update(cTime);
+                
+                spriteBatch.begin();
                 game.draw(cTime, ctx);
+                spriteBatch.finish();
             }, 0);
 
             return game;

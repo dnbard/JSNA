@@ -3,6 +3,7 @@ require.config({
     paths: {
         public: '../public',
         underscore: '../bower_components/underscore/underscore',
+        PriorityQueue: '../bower_components/js-priority-queue/priority-queue',
         pubsub: '../bower_components/pubsub/src/pubsub',
         sprites: '../sprites', 
         ext: '../ext',

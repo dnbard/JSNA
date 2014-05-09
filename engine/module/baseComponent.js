@@ -1,30 +1,15 @@
 define([
     'underscore',
-    'engine-js',    
+    'engine-js',
     'ext/helpers',
+    'spriteBatch',
     'sugar'
-], function(_, engine, helpers){
+], function(_, engine, helpers, spriteBatch){
     var defaultFont, defaultColor,
-        prepare = function(ctx, options){
-        ctx.textBaseline="top";
-
-        if (options.font){
-            defaultFont = ctx.font;
-            ctx.font = options.font;
-        }
-
-        if (options.color) {
-            defaultColor = ctx.fillStyle;
-            ctx.fillStyle = options.color;
-        }
-
-        if (options.opacity){
-            ctx.globalAlpha = options.opacity;
-        }
+    prepare = function(ctx, options){
+        spriteBatch.prepare(ctx, options);
     }, restore = function(ctx){
-        ctx.fillStyle = defaultColor;
-        ctx.font = defaultFont;
-        ctx.globalAlpha = 1;
+        spriteBatch.restore(ctx);
     }, getTextHeight = function(font) {
         var body = document.getElementsByTagName('body')[0],
             dummy = document.createElement('div'),
@@ -82,40 +67,14 @@ define([
             restore(ctx);
             return metrics;
         },
-        fillText: function(ctx, options){            
-            prepare(ctx, options);            
-
-            ctx.fillText(options.text,
-                options.x? options.x: 0,
-                options.y? options.y: 0
-            );
-
-            restore(ctx);
+        fillText: function(ctx, options){
+            spriteBatch.fillText(ctx, options);
         },
         drawImage: function(ctx, options){
-            prepare(ctx, options);
-
-            ctx.drawImage(options.image,
-                options.x? options.x: 0,
-                options.y? options.y: 0);
-
-            restore(ctx);
+            spriteBatch.drawImage(ctx, options);
         },
         drawSprite: function(ctx, options){
-            prepare(ctx, options);
-            var spriteInfo = options.image.sprite.spriteInfo[options.image.name];
-
-            ctx.drawImage(options.image.sprite,
-                spriteInfo.x, 
-                spriteInfo.y,
-                spriteInfo.width, 
-                spriteInfo.height,
-                options.x? options.x: 0,
-                options.y? options.y: 0,
-                spriteInfo.width,
-                spriteInfo.height);
-
-            restore(ctx);
+            spriteBatch.drawSprite(ctx, options);
         },
         isPointInRect: function(point, rect){
             try{
@@ -137,7 +96,7 @@ define([
                 var mixinUpdate = _.bind(mixin.update, context);
                 context.update = _.wrap(context.update, function(func, time){
                     func.bind(context)(time);
-                    mixinUpdate(time);                    
+                    mixinUpdate(time);
                 });
             }
 
@@ -149,11 +108,11 @@ define([
                 });
             }
 
-            if (mixin.events){                
+            if (mixin.events){
                 _.each(mixin.events, _.bind(function(value, key){
                     this.addEvent(key, value);
                 }, this));
-            }            
+            }
 
             _.extend(context, _.omit(mixin, 'update', 'draw', 'events'));
         }

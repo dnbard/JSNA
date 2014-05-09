@@ -131,7 +131,7 @@ define([
             },          
             mixins:[
                 characterSelectionMixin
-            ]           
+            ]
         },
         'hero-unknown1': {
             type: Image,
@@ -141,7 +141,7 @@ define([
                 image: ImagesManager.get('hero_unknown'),
                 layer: 10,
                 opacity: 0.35
-            }           
+            }
         },
         'hero-unknown2': {
             type: Image,
@@ -151,7 +151,7 @@ define([
                 image: ImagesManager.get('hero_unknown'),
                 layer: 10,
                 opacity: 0.35
-            }           
+            }
         },
         'hero-unknown3': {
             type: Image,
@@ -161,7 +161,7 @@ define([
                 image: ImagesManager.get('hero_unknown'),
                 layer: 10,
                 opacity: 0.35
-            }           
+            }
         }
     };
 });
