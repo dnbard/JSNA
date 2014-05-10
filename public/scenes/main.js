@@ -10,17 +10,6 @@ define([
         this.camera = new Camera();
         this.add(this.camera);
 
-        /*this.init({
-            'test':{
-                type: Image,
-                init:{
-                    camera: this.camera,
-                    image: images.get('hero_knight0')
-                },
-                mixins: [cameraMixin]
-            }
-        });*/
-
         var test = new Image({
             image: images.get('hero_knight0'),
             camera: this.camera

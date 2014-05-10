@@ -1,41 +1,60 @@
 define([
-	'public/global', 
-	'main/events'
+    'public/global', 
+    'main/events'
 ], function(global, events){
-	var instance = null;
+    var instance = null;
 
-	function KeyboardController(){
-		var self = this;
+    function KeyboardController(){
+        var self = this,
+            keyTimeDelay = 300;
 
-		window.addEventListener('keypress', function(event){
-			events.publish(events.KEYBOARD_KEYPRESS, self.getKeyPressObject(event));
-		});
+        var keypressTimeout = 0;
+        window.addEventListener('keypress', function(event){
+            var cDate = new Date();
+            
+            if (cDate - keypressTimeout > keyTimeDelay){
+                events.publish(events.KEYBOARD_KEYPRESS, self.getKeyPressObject(event));
+                keypressTimeout = cDate;
+            }
+        });
 
-		window.addEventListener('keydown', function(event){
-			events.publish(events.KEYBOARD_KEYDOWN, self.getKeyPressObject(event));
-		});
+        var keydownTimeout = 0;
+        window.addEventListener('keydown', function(event){
+            var cDate = new Date();
 
-		window.addEventListener('keyup', function(event){
-			events.publish(events.KEYBOARD_KEYUP, self.getKeyPressObject(event));
-		});
-	}
+            if (cDate - keydownTimeout > keyTimeDelay){
+                events.publish(events.KEYBOARD_KEYDOWN, self.getKeyPressObject(event));
+                keydownTimeout = cDate;
+            }
+        });
 
-	KeyboardController.getInstance = function(){
-		if (instance === null){
-			instance = new KeyboardController();
-		}
-		return instance;
-	}
+        var keyupTimeout = 0;
+        window.addEventListener('keyup', function(event){
+            var cDate = new Date();
 
-	KeyboardController.prototype.getKeyPressObject = function(event){
-		return {
-			alt: event.altKey,
-			keyCode: event.keyCode? event.keyCode : event.charCode,
-			key: String.fromCharCode(event.keyCode? event.keyCode : event.charCode),
-			ctrl: event.ctrlKey,
-			shift: event.shiftKey
-		};
-	}
+            if (cDate - keyupTimeout > keyTimeDelay){
+                events.publish(events.KEYBOARD_KEYUP, self.getKeyPressObject(event));
+                keydownTimeout = cDate;
+            }
+        });
+    }
 
-	return KeyboardController.getInstance();
+    KeyboardController.getInstance = function(){
+        if (instance === null){
+            instance = new KeyboardController();
+        }
+        return instance;
+    }
+
+    KeyboardController.prototype.getKeyPressObject = function(event){
+        return {
+            alt: event.altKey,
+            keyCode: event.keyCode? event.keyCode : event.charCode,
+            key: String.fromCharCode(event.keyCode? event.keyCode : event.charCode),
+            ctrl: event.ctrlKey,
+            shift: event.shiftKey
+        };
+    }
+
+    return KeyboardController.getInstance();
 });
